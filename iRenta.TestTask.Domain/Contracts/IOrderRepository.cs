@@ -1,4 +1,5 @@
 ﻿using iRenta.TestTask.Domain.Orders.Entities;
+using iRenta.TestTask.Domain.Orders.Enumerations;
 
 namespace iRenta.TestTask.Domain.Contracts;
 
@@ -12,6 +13,8 @@ public interface IOrderRepository
     IEnumerable<Order> GetAll();
 
     IEnumerable<Order> GetForDate(DateOnly date);
+
+    public IEnumerable<Order> GetByStatus(OrderStatus status);
 
     void Insert(Order entity);
 
