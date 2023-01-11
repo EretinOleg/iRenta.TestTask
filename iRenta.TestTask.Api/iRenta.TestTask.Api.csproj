@@ -14,4 +14,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\iRenta.TestTask.Domain\iRenta.TestTask.Domain.csproj" />
+    <ProjectReference Include="..\iRenta.TestTask.Persistence\iRenta.TestTask.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>

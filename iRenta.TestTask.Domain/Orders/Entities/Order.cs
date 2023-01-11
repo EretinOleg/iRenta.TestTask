@@ -25,4 +25,9 @@ public class Order : Core.Primitives.Entity
         Result.Success<bool, Error>(true)
             // TODO: number is unique
             .Map(_ => new Order(id, number, customerName, status));
+
+    public void AddItem(OrderItem item)
+    {
+        _items.Add(item);
+    }
 }
