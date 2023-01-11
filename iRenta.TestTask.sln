@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRenta.TestTask.Domain", "i
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRenta.TestTask.Persistence", "iRenta.TestTask.Persistence\iRenta.TestTask.Persistence.csproj", "{A41D890D-B98D-4DE1-9329-C2DB3D953E3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRenta.TestTask.Application", "iRenta.TestTask.Application\iRenta.TestTask.Application.csproj", "{CDBC9AB6-1F90-48AF-A0D6-B6F773A8424F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A41D890D-B98D-4DE1-9329-C2DB3D953E3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A41D890D-B98D-4DE1-9329-C2DB3D953E3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A41D890D-B98D-4DE1-9329-C2DB3D953E3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDBC9AB6-1F90-48AF-A0D6-B6F773A8424F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDBC9AB6-1F90-48AF-A0D6-B6F773A8424F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDBC9AB6-1F90-48AF-A0D6-B6F773A8424F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDBC9AB6-1F90-48AF-A0D6-B6F773A8424F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

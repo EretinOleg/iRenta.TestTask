@@ -1,8 +1,10 @@
+using iRenta.TestTask.Application;
 using iRenta.TestTask.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
+    .AddApplication()
     .AddPersistence();
 
 
