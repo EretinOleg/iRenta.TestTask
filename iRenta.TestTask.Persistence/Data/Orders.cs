@@ -1,4 +1,5 @@
-﻿using iRenta.TestTask.Domain.Orders.Entities;
+﻿using Bogus;
+using iRenta.TestTask.Domain.Orders.Entities;
 using iRenta.TestTask.Domain.Orders.Enumerations;
 using System.Collections.Concurrent;
 
@@ -10,11 +11,25 @@ internal static class Orders
 
     static Orders()
     {
-        Data.TryAdd(10, Order.Create(Guid.NewGuid(), 10, "John Smith", OrderStatus.Registered).Value);
-        Data.TryAdd(11, Order.Create(Guid.NewGuid(), 11, "Ivan Ivanov", OrderStatus.Registered).Value);
-        Data.TryAdd(12, Order.Create(Guid.NewGuid(), 12, "James", OrderStatus.Canceled).Value);
-        Data.TryAdd(13, Order.Create(Guid.NewGuid(), 13, "Victor", OrderStatus.Completed).Value);
-        Data.TryAdd(14, Order.Create(Guid.NewGuid(), 14, "Michael B.", OrderStatus.Registered).Value);
-        Data.TryAdd(15, Order.Create(Guid.NewGuid(), 15, "Leo Messi", OrderStatus.Registered).Value);
+        sbyte number = 10;
+
+        foreach (var order in new Faker<Order>()
+            .RuleFor(o => o.Id, _ => Guid.NewGuid())
+            .RuleFor(o => o.Number, _ => number++)
+            .RuleFor(o => o.CustomerName, f => f.Person.FullName)
+            .RuleFor(o => o.Status, (f, o) => f.PickRandom(OrderStatus.All.ToList()))
+            .GenerateBetween(50, 100))
+        {
+            foreach (var item in new Faker<OrderItem>()
+                .RuleFor(x => x.Id, _ => Guid.NewGuid())
+                .RuleFor(x => x.Product, (f, x) => f.PickRandom(Products.Data.Values))
+                .RuleFor(x => x.Count, f => (byte)f.Random.Int(1, 5))
+                .GenerateBetween(2, 5))
+            {
+                order.AddItem(item);
+            }
+
+            Data.TryAdd(order.Number, order);
+        }
     }
 }

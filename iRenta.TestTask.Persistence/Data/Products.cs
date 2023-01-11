@@ -1,4 +1,5 @@
-﻿using iRenta.TestTask.Domain.Orders.Entities;
+﻿using Bogus;
+using iRenta.TestTask.Domain.Orders.Entities;
 using System.Collections.Concurrent;
 
 namespace iRenta.TestTask.Persistence.Data;
@@ -9,10 +10,16 @@ internal static class Products
 
     static Products()
     {
-        Data.TryAdd(100, Product.Create(Guid.NewGuid(), 100, "Product 100", 10.0m).Value);
-        Data.TryAdd(101, Product.Create(Guid.NewGuid(), 101, "Product 101", 12.0m).Value);
-        Data.TryAdd(102, Product.Create(Guid.NewGuid(), 102, "Product 102", 1_000.0m).Value);
-        Data.TryAdd(103, Product.Create(Guid.NewGuid(), 103, "Product 103", 50.0m).Value);
-        Data.TryAdd(104, Product.Create(Guid.NewGuid(), 104, "Product 104", 1.55m).Value);
+        sbyte code = 100;
+
+        foreach(var product in new Faker<Product>()
+            .RuleFor(p => p.Id, _ => Guid.NewGuid())
+            .RuleFor(p => p.VendorCode, _ => code++)
+            .RuleFor(p => p.Name, f => f.Commerce.ProductName())
+            .RuleFor(p => p.Price, f => decimal.Parse(f.Commerce.Price(1.0m, 100.0m)))
+            .GenerateBetween(10, 20))
+        {
+            Data.TryAdd(product.VendorCode, product);
+        }
     }
 }

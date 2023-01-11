@@ -13,6 +13,9 @@ public class Order : Core.Primitives.Entity
     private List<OrderItem> _items = new();
     public IReadOnlyCollection<OrderItem> Items => _items.AsReadOnly();
 
+    // for test data only
+    public Order() { }
+
     private Order(Guid id, short number, string customerName, OrderStatus status)
         : base(id)
     {

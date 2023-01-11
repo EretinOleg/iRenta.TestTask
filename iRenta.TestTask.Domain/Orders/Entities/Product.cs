@@ -9,6 +9,9 @@ public class Product : Core.Primitives.Entity
     public string Name { get; private set; }
     public decimal Price { get; private set; }
 
+    // for test data only
+    public Product() { }
+
     private Product(Guid id, sbyte vendorCode, string name, decimal price)
         : base(id)
     {

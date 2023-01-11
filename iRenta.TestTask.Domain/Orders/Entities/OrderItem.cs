@@ -8,6 +8,9 @@ public class OrderItem : Core.Primitives.Entity
     public Product Product { get; private set; }
     public byte Count { get; private set; }
 
+    // for test data only
+    public OrderItem() { }
+
     private OrderItem(Guid id, Product product, byte count)
         : base(id)
     {
