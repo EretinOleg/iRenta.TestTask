@@ -11,6 +11,8 @@ public interface IOrderRepository
 
     IEnumerable<Order> GetAll();
 
+    IEnumerable<Order> GetForDate(DateOnly date);
+
     void Insert(Order entity);
 
     void Remove(Order entity);

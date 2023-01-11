@@ -35,5 +35,13 @@ public sealed class OrderController : ApiController
                 .Bind(async query => await Mediator.Send(query)))
             .Match<IActionResult, OrderResponse>(Ok, NotFound);
 
-    
+    /// <summary>
+    /// Get orders for date
+    /// </summary>
+    [HttpGet(ApiRoutes.Order.GetForDate)]
+    [ProducesResponseType(typeof(IReadOnlyCollection<OrderResponse>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetForDate(string date) =>
+        Ok(await Mediator.Send(new GetOrdersForDateQuery(DateOnly.Parse(date))));
+
+
 }

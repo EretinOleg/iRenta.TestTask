@@ -18,6 +18,7 @@ internal static class Orders
             .RuleFor(o => o.Number, _ => number++)
             .RuleFor(o => o.CustomerName, f => f.Person.FullName)
             .RuleFor(o => o.Status, (f, o) => f.PickRandom(OrderStatus.All.ToList()))
+            .RuleFor(o => o.RegisteredDate, f => f.Date.PastDateOnly())
             .GenerateBetween(50, 100))
         {
             foreach (var item in new Faker<OrderItem>()

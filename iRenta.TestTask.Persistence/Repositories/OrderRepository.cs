@@ -14,6 +14,8 @@ public class OrderRepository : Repository<Order>, IOrderRepository
 
     public Order? GetByNumber(short number) => DataSource.FirstOrDefault(x => x.Number == number);
 
+    public IEnumerable<Order> GetForDate(DateOnly date) => DataSource.Where(x => x.RegisteredDate == date).ToList();
+
     public void Insert(Order entity) =>
         Orders.Data.TryAdd(entity.Number, entity);
 

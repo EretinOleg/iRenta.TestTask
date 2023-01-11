@@ -14,5 +14,7 @@ public static class ApiRoutes
         public const string Get = "orders";
 
         public const string GetByNumber = "orders/{number:range(1,32767)}";
+
+        public const string GetForDate = "orders/{date:regex(^\\d{{4}}-\\d{{2}}-\\d{{2}}$)}";
     }
 }
