@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRenta.TestTask.Api", "iRenta.TestTask.Api\iRenta.TestTask.Api.csproj", "{389533D7-D4E5-43F6-A3E6-362068E505D2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{389533D7-D4E5-43F6-A3E6-362068E505D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{389533D7-D4E5-43F6-A3E6-362068E505D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{389533D7-D4E5-43F6-A3E6-362068E505D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{389533D7-D4E5-43F6-A3E6-362068E505D2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C858FE90-FAD8-4B04-8490-1415D2E33E87}
+	EndGlobalSection
+EndGlobal
