@@ -1,11 +1,12 @@
 ﻿using CSharpFunctionalExtensions;
 using iRenta.TestTask.Api.Contracts;
-using iRenta.TestTask.Application.Products.Queries;
-using iRenta.TestTask.Application.Products;
+using iRenta.TestTask.Application.Orders;
+using iRenta.TestTask.Application.Orders.Commands;
+using iRenta.TestTask.Application.Orders.Queries;
+using iRenta.TestTask.Domain.Core.Extensions;
+using iRenta.TestTask.Domain.Core.Primitives;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using iRenta.TestTask.Application.Orders;
-using iRenta.TestTask.Application.Orders.Queries;
 
 namespace iRenta.TestTask.Api.Controllers;
 
@@ -43,5 +44,14 @@ public sealed class OrderController : ApiController
     public async Task<IActionResult> GetForDate(string date) =>
         Ok(await Mediator.Send(new GetOrdersForDateQuery(DateOnly.Parse(date))));
 
-
+    /// <summary>
+    /// Remove order
+    /// </summary>
+    [HttpDelete(ApiRoutes.Order.Remove)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Remove([FromRoute] short number) =>
+        (await Result.Success<RemoveOrderCommand, Error>(new RemoveOrderCommand(number))
+            .Bind(async x => await Mediator.Send(x)))
+            .Match<IActionResult, Error>(Ok, BadRequest);
 }
