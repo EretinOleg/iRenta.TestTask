@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using iRenta.TestTask.Api.Contracts;
+using iRenta.TestTask.Api.Contracts.Requests.Orders;
 using iRenta.TestTask.Application.Orders;
 using iRenta.TestTask.Application.Orders.Commands;
 using iRenta.TestTask.Application.Orders.Queries;
@@ -54,4 +55,16 @@ public sealed class OrderController : ApiController
         (await Result.Success<RemoveOrderCommand, Error>(new RemoveOrderCommand(number))
             .Bind(async x => await Mediator.Send(x)))
             .Match<IActionResult, Error>(Ok, BadRequest);
+
+    /// <summary>
+    /// Create new order
+    /// </summary>
+    [HttpPost(ApiRoutes.Order.Create)]
+    [ProducesResponseType(typeof(OrderResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Create([FromBody] OrderRequest request) =>
+        (await Result.Success<OrderRequest, Error>(request)
+            .Map(x => new CreateOrderCommand(x.Number, x.CustomerName, x.Items))
+            .Bind(async x => await Mediator.Send(x)))
+            .Match<OrderResponse, IActionResult, Error>(Ok, BadRequest);
 }

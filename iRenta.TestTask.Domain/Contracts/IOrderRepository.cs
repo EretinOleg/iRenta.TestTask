@@ -16,6 +16,8 @@ public interface IOrderRepository
 
     public IEnumerable<Order> GetByStatus(OrderStatus status);
 
+    bool IsNumberExist(Guid id, short number);
+
     void Insert(Order entity);
 
     void Remove(Order entity);

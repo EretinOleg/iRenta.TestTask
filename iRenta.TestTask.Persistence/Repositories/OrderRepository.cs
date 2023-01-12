@@ -19,6 +19,8 @@ public class OrderRepository : Repository<Order>, IOrderRepository
 
     public IEnumerable<Order> GetByStatus(OrderStatus status) => DataSource.Where(o => o.Status == status).ToList();
 
+    public bool IsNumberExist(Guid id, short number) => DataSource.Any(o => o.Id != id && o.Number == number);
+
     public void Insert(Order entity) =>
         Orders.Data.TryAdd(entity.Number, entity);
 
