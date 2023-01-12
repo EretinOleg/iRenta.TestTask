@@ -7,6 +7,7 @@ using iRenta.TestTask.Application.Orders.Queries;
 using iRenta.TestTask.Domain.Core.Extensions;
 using iRenta.TestTask.Domain.Core.Primitives;
 using MediatR;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace iRenta.TestTask.Api.Controllers;
@@ -77,6 +78,18 @@ public sealed class OrderController : ApiController
     public async Task<IActionResult> Update([FromRoute] short number, [FromBody] OrderUpdateRequest request) =>
         (await Result.Success<OrderUpdateRequest, Error>(request)
             .Map(x => new UpdateOrderCommand(number, x.CustomerName, x.Items))
+            .Bind(async x => await Mediator.Send(x)))
+            .Match<OrderResponse, IActionResult, Error>(Ok, BadRequest);
+
+    /// <summary>
+    /// Patch order
+    /// </summary>
+    [HttpPatch(ApiRoutes.Order.Patch)]
+    [ProducesResponseType(typeof(OrderResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Patch([FromRoute] short number, [FromBody] JsonPatchDocument request) =>
+        (await Result.Success<JsonPatchDocument, Error>(request)
+            .Map(x => new PatchOrderCommand(number, x))
             .Bind(async x => await Mediator.Send(x)))
             .Match<OrderResponse, IActionResult, Error>(Ok, BadRequest);
 }
