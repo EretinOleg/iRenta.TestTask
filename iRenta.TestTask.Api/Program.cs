@@ -1,3 +1,4 @@
+using iRenta.TestTask.Api.Middleware;
 using iRenta.TestTask.Application;
 using iRenta.TestTask.Persistence;
 
@@ -21,6 +22,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCustomExceptionHandler();
 
 app.UseHttpsRedirection();
 
