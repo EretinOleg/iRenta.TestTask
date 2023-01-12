@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using iRenta.TestTask.Domain.Core.Primitives;
+using iRenta.TestTask.Domain.Orders.Enumerations;
 
 namespace iRenta.TestTask.Domain.Orders.Entities;
 
@@ -23,4 +24,9 @@ public class OrderItem : Core.Primitives.Entity
             .Ensure(_ => product is not null, _ => Errors.OrderItem.ProductIsNull)
             .Ensure(_ => count > 0, _ => Errors.OrderItem.InvalidCount)
             .Map(_ => new OrderItem(id, product, count));
+
+    internal UnitResult<Error> ChangeCount(byte count) =>
+        UnitResult.Success<Error>()
+            .Ensure(() => count > 0, () => Errors.OrderItem.InvalidCount)
+            .Tap(() => Count = count);
 }

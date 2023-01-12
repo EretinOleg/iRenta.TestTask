@@ -20,5 +20,7 @@ public static class ApiRoutes
         public const string Remove = "orders/{number:range(1,32767)}";
 
         public const string Create = "orders";
+
+        public const string Update = "orders/{number:range(1,32767)}";
     }
 }

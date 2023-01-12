@@ -24,12 +24,14 @@ public class CreateOrderCommandHandler : ICommandHandler<CreateOrderCommand, Res
         if (request.Items.GroupBy(x => x.ProductCode).Count() > Order.MaxItemsCount)
             return Task.FromResult(Result.Failure<OrderResponse, Error>(Domain.Orders.Errors.Order.TooManyItems));
 
+        // create order entity
         var result = Order.Create(Guid.NewGuid(), request.Number, request.CustomerName,
             OrderStatus.Registered, DateOnly.FromDateTime(DateTime.UtcNow), _orderRepository);
         if (result.IsFailure)
             return Task.FromResult(Result.Failure<OrderResponse, Error>(result.Error));
 
         var order = result.Value;
+        // add order items one by one
         foreach(var group in request.Items.GroupBy(x => x.ProductCode))
         {
             var product = _productRepository.GetByCode(group.Key);
@@ -45,6 +47,7 @@ public class CreateOrderCommandHandler : ICommandHandler<CreateOrderCommand, Res
                 return Task.FromResult(Result.Failure<OrderResponse, Error>(addResult.Error));
         }
 
+        // commit
         _orderRepository.Insert(order);
         return Task.FromResult(
             Result.Success<OrderResponse, Error>(_orderRepository.GetByNumber(request.Number)!.Adapt<OrderResponse>()));

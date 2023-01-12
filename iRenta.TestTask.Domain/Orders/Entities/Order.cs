@@ -39,7 +39,24 @@ public class Order : Core.Primitives.Entity
 
     public UnitResult<Error> AddItem(OrderItem item) =>
         UnitResult.Success<Error>()
+            .Ensure(() => Status == OrderStatus.Registered, () => Errors.Order.InvalidStatus)
             .Ensure(() => _items.Count() < MaxItemsCount, () => Errors.Order.TooManyItems)
             .Ensure(() => _items.Sum(x => x.Product.Price * x.Count) + item.Product.Price * item.Count < MaxSum, () => Errors.Order.TotalSumExceeded)
             .Tap(() => _items.Add(item));
+
+    public UnitResult<Error> RemoveItem(OrderItem item) =>
+        UnitResult.Success<Error>()
+            .Ensure(() => Status == OrderStatus.Registered, () => Errors.Order.InvalidStatus)
+            .Tap(() => _items.Remove(item));
+
+    public UnitResult<Error> ChangeCustomerName(string customerName) =>
+        UnitResult.Success<Error>()
+            .Ensure(() => Status == OrderStatus.Registered, () => Errors.Order.InvalidStatus)
+            .Tap(() => CustomerName = customerName);
+
+    public UnitResult<Error> ChangeCount(OrderItem item, byte count) =>
+        UnitResult.Success<Error>()
+            .Ensure(() => Status == OrderStatus.Registered, () => Errors.Order.InvalidStatus)
+            .Ensure(() => count > 0, () => Errors.OrderItem.InvalidCount)
+            .Tap(() => item.ChangeCount(count));
 }

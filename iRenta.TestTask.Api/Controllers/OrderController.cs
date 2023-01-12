@@ -67,4 +67,16 @@ public sealed class OrderController : ApiController
             .Map(x => new CreateOrderCommand(x.Number, x.CustomerName, x.Items))
             .Bind(async x => await Mediator.Send(x)))
             .Match<OrderResponse, IActionResult, Error>(Ok, BadRequest);
+
+    /// <summary>
+    /// Update order
+    /// </summary>
+    [HttpPut(ApiRoutes.Order.Update)]
+    [ProducesResponseType(typeof(OrderResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Update([FromRoute] short number, [FromBody] OrderUpdateRequest request) =>
+        (await Result.Success<OrderUpdateRequest, Error>(request)
+            .Map(x => new UpdateOrderCommand(number, x.CustomerName, x.Items))
+            .Bind(async x => await Mediator.Send(x)))
+            .Match<OrderResponse, IActionResult, Error>(Ok, BadRequest);
 }
